@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es" data-ng-app="app">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IONIC Vanilla Typescript</title>
+
+</head>
+
+<body>
+  <div style="display:grid; grid-gap:5px; max-width: 1220px; grid-template-columns: repeat(4,  minmax(405px, 1fr));">
+
+    <div>
+      <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form0"></ion-form>
+    </div>
+
+    <div>
+      <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form1"></ion-form>
+    </div>
+
+    <div>
+      <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form2"></ion-form>
+    </div>
+
+    <div>
+      <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form3"></ion-form>
+    </div>
+
+    <div>
+      <!-- <ion-form  style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form4"></ion-form> -->
+    </div>
+
+  </div>
+  <div style="display:grid; grid-gap:5px; max-width: 1220px; grid-template-columns: repeat(4,  minmax(405px, 1fr));">
+  </div>
+  <!-- <script type="module"  src="/src/main.ts"></script> -->
+
+
+  <script type="module" src="/dist/ionform.umd.js"></script>
+  <script type="text/javascript">
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+
+      const form0 = document.IonForm('form0');
+
+      const jsonForm = { "name": '', "email": '' };
+
+      form0.createForm({ jsonForm });
+
+      form0.fieldValidate('email', async (fieldState) => {
+
+        const { value, validator, helper, error, linkField } = fieldState;
+
+        if (validator.isEmail(value)) {
+
+          helper.textContent = 'congrats! your email is now correct';
+
+          return true;
+
+        }
+
+        error.textContent = 'it needs to be an email my friend!';
+
+        return false;
+
+      });
+
+      const form1 = document.IonForm('form1');
+
+
+      const detailedSchema2 = [
+
+        { name: 'first', value: 'Pillsbury', helper: 'enter your first name', type: 'text', tagName: 'input' },
+
+
+        { name: 'last', value: 'Doughboy', disabled: 'true', type: 'text', tagName: 'input' },
+
+
+        { name: 'email', value: 'Eat@it.com', helper: 'enter your email', disabled: 'false', type: 'text', tagName: 'input' },
+
+
+        { name: 'phone', value: '9494548213', disabled: 'true', type: 'text', tagName: 'input' },
+
+
+        { name: 'age', value: '55', disabled: 'false', helper: 'enter your age', type: 'text', tagName: 'ion-input' },
+
+
+        { name: 'postcode', value: '', disabled: 'false', type: 'text', tagName: 'input' },
+
+
+        { name: 'city', disabled: 'false', type: 'text', tagName: 'ion-input', value: 'city' },
+
+        {
+          name: 'housenumber', value: '', helper: 'enter your house number', disabled:
+            'false', type: 'text', tagName: 'ion-input', validation: async function (fieldState) {
+
+              const { value, validator, helper, error, linkField } = fieldState;
+
+              if (helper && value.length > 3) {
+
+                helper.textContent = 'good job! 😊';
+
+                return true
+
+              } else if (error, linkField) {
+
+                error.textContent = 'Do better friend! 😊';
+
+                return false
+
+              }
+
+              return false;
+
+            }
+
+        },
+
+        { name: 'username', disabled: 'false', type: 'text', tagName: 'ion-input', helper: 'type username' },
+
+        { name: 'submit', disabled: 'false', type: 'button', tagName: 'ion-button' }
+
+      ];
+
+      form1.createForm({ detailedSchema: detailedSchema2 });
+
+      form1.fieldValidate('email', async (fieldState) => {
+
+        const { value, validator, helper, error, linkField } = fieldState;
+
+        if (validator.isEmail(value)) {
+
+          helper.textContent = 'congrats! your email is now correct';
+
+          return true;
+
+        }
+
+        error.textContent = 'it needs to be an email my friend';
+
+        return false;
+
+      });
+
+      form1.onFormChange((submit) => {
+
+        const { changes, event, completeForm } = submit
+
+        if (changes.has('username')) {
+
+          const username = changes.get('username')
+
+
+          return true;
+        }
+
+
+
+        return false;
+
+      });
+
+
+
+
+
+
+      const validationSchema = {
+
+        first: async (fieldState) => {
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+          const first = value;
+          return first.length > 2 && first.length < 20;
+
+        },
+        username:
+          async (fieldState) => {
+            const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+
+            const first = value;
+            return first.length > 2 && first.length < 20;
+          },
+        last: (fieldState) => {
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+          const last = value;
+          return last.length > 2 && last.length < 20;
+
+        },
+        email: (fieldState) => {
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+          const email = value;
+          return validator.isEmail(email);
+
+        },
+        age: (fieldState) => {
+         
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+         
+          const age = +value;
+         
+          return age >= 18;
+        },
+
+        postcode: (fieldState) => {
+       
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+         
+          const zip = value;
+         
+          const validZipTest = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+         
+          return validZipTest.test(zip);
+        },
+
+        state: (fieldState) => {
+        
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+        
+          const state = value;
+        
+          return state.length > 1;
+        
+        },
+
+        city: (fieldState) => {
+        
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+        
+          const city = value;
+        
+          const rgx = /(^[a-zA-Z',.\s-]{1,25}$)/;
+        
+          return rgx.test(city);
+
+        },
+        
+        housenumber: (fieldState) => {
+        
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+        
+          const nums = value;
+        
+          return nums.length && !isNaN(+nums);
+
+        },
+        password: (fieldState) => {
+        
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+
+          const password = value;
+
+          const schema = new passwordValidator();
+
+          schema
+            .is().min(8)                                    // Minimum length 8
+            .is().max(100)                                  // Maximum length 100
+            .has().uppercase()                              // Must have uppercase letters
+            .has().lowercase()                              // Must have lowercase letters
+            .has().digits(2)                                // Must have at least 2 digits
+            .has().not().spaces()                           // Should not have spaces
+            .is().not().oneOf(['Passw0rd', 'Password123']);
+
+          return true;
+
+        },
+        
+        upc: (fieldState) => {
+        
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+
+          return validateUPC(fieldState.target.value);
+        
+        },
+        
+        repeatpassword: (fieldState) => {
+        
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+        
+          const repeatedValue = value;
+        
+          return originalValue === repeatedValue;
+        
+        },
+        phone: async (fieldState) => {
+
+          const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+          
+          const phone = value;
+
+          return validator.isMobilePhone(phone, 'en-US');
+
+        },
+
+      };
+
+      const form2 = document.IonForm('form2');
+
+      const detailedSchema3 = [
+
+        { name: 'first', value: 'Pillsbury', type: 'text', tagName: 'input', validator: validationSchema.first },
+
+
+        { name: 'last', value: 'Doughboy', disabled: 'true', type: 'text', tagName: 'input', helper: 'enter your last name', validator: validationSchema.last },
+
+
+        { name: 'email', value: 'Eat@it.com', disabled: 'false', type: 'text', helper: 'enter your email', tagName: 'input', validator: validationSchema.email },
+
+
+        { name: 'phone', value: '9494548213', disabled: 'true', type: 'text', tagName: 'input', validator: validationSchema.phone },
+
+
+        { name: 'age', value: '55', disabled: 'false', type: 'text', tagName: 'ion-input', validator: validationSchema.age },
+
+
+        { name: 'postcode', value: '', disabled: 'false', type: 'text', tagName: 'input', validator: validationSchema.name },
+
+
+        { name: 'city', disabled: 'false', type: 'text', tagName: 'ion-input', value: 'city', validator: validationSchema.city }
+
+      ];
+
+      const keys = Object.keys(validationSchema)
+
+      for (const key of keys) {
+
+        validationSchema[key]
+
+      }
+
+      form2.createForm({ detailedSchema: detailedSchema3 });
+
+      const form3 = document.IonForm('form3')
+
+      form3.createForm({
+
+        detailedSchema: [
+
+          { name: 'password', value: 'password', type: 'password', tagName: 'input', validator: validationSchema.first },
+
+
+          { name: 'repeatPassword', value: '', type: 'text', tagName: 'input', helper: 'type password', validator: validationSchema.last },
+
+        ]
+
+      });
+
+
+      form3.fieldValidate('repeatPassword', async (fieldState) => {
+
+        const { value, validator, helper, error, linkField } = fieldState;
+
+
+        if (linkField) {
+
+          const link = linkField('password');
+
+          if (link === value) {
+
+            helper.innerText = 'do your thing bro!';
+
+            if (fieldState.value.length > 3) {
+
+              return true;
+
+            }
+
+          }
+
+          error.innerText = 'get your password right! you bad password typier!';
+
+          return false;
+
+        }
+
+      });
+
+    })
+
+  </script>
+
+</body>
+
+</html>

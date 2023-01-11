@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src/",
+    "target": "ESNext",
+    "module": "ESNext",
+
+    "useDefineForClassFields": true,
+    "lib": ["ESNext","es6","dom",  "dom.iterable","es2020",  "scripthost"],
+    "moduleResolution": "Node",
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx":"preserve",
+    // "rootDir": "src",
+ // "typeRoots": ["./node_modules/@ionic/core/components/ion-icon","./src/custom-typings"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "paths":{
+     "@/*": ["./src/*"]
+    },
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "outDir": "dist",
+    "declaration": true,
+    "types": ["vite/client", "node", "jest"]
+  },
+
+  "include": ["./src/**.*", "vite.config.*", "env.d.ts", "src/**/*"]
+
+}

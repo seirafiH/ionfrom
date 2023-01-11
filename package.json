@@ -1,0 +1,74 @@
+{
+  "name": "ionform",
+  "version": "0.0.15",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "description": "a dynamic form generator and validator",
+  "engines": {
+    "node": "^14.20.0 || ^16.13.0 || >=18.10.0"
+  },
+  "keywords": [
+    "form",
+    "forms",
+    "dynamic forms",
+    "ionic forms",
+    "vanilla forms",
+    "angular forms",
+    "vue forms",
+    "react forms",
+    "form validation",
+    "error validation handling",
+    "helper validation handling"
+  ],
+  "type": "module",
+  "main": "./dist/ionform.es.js",
+  "typings": "./dist/ionform.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts",
+    "serve": "vite preview --port 5050",
+    "test:coverage": "jest --runInBand --coverage",
+    "lint:scripts": "eslint . --ext .ts",
+    "lint:styles": "stylelint ./**/*.{css,scss}",
+    "format:scripts": "prettier . --write",
+    "format:styles": "stylelint ./**/*.{css,scss} --fix",
+    "format": "npm run format:scripts && npm run format:styles"
+  },
+  "dependencies": {
+    "password-validator": "^5.3.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": { 
+     "vite-plugin-minify": "^1.5.2",
+    "@ionic/core": "^6.0.16",
+    "@liuli-util/vite-plugin-env-dts-gen": "^0.3.0",
+    "@types/csso": "^5.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/jsdom": "^20.0.0",
+    "@types/node": "^18.7.16",
+    "@types/validator": "^13.7.10",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "csso": "^5.0.5",
+    "dts-bundle-generator": "^6.13.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "stylelint": "^14.11.0",
+    "stylelint-config-recommended": "^9.0.0",
+    "stylelint-config-sass-guidelines": "^9.0.1",
+    "ts-jest": "^28.0.8",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2",
+    "typescript": "^4.8.3",
+    "vite": "^3.1.0",
+    "vite-plugin-commonjs": "^0.6.1"
+  }
+}

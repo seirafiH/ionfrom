@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IONIC Vanilla Typescript</title>
+
+</head>
+
+<body>
+  <div style="display:grid; grid-gap:5px; max-width: 1220px; grid-template-columns: repeat(4,  minmax(405px, 1fr));">
+
+    <div>
+      <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="myForm"></ion-form>
+    </div>
+
+    <div>
+      <!-- <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form1"></ion-form> -->
+    </div>
+
+    <div>
+      <!-- <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form2"></ion-form> -->
+    </div>
+
+    <div>
+      <!-- <ion-form style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form3"></ion-form> -->
+    </div>
+
+    <div>
+      <!-- <ion-form  style="position:fixed; min-height:800px; max-width:400px; min-width:400px" formname="form4"></ion-form> -->
+    </div>
+
+  </div>
+  <div style="display:grid; grid-gap:5px; max-width: 1220px; grid-template-columns: repeat(4,  minmax(405px, 1fr));">
+  </div>
+  <script src="https://unpkg.com/typescript@latest/lib/typescriptServices.js"></script>
+  <script  type="text/html" id="code" src="/index.ts"></script>
+
+  <script type="text/javascript">
+
+document.addEventListener('DOMContentLoaded', async ()=>{
+   const text = await fetch('index.ts').then(response => {
+    if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+    }
+    return response.text();
+})
+console.log(text)
+eval(window.ts.transpile(text,{"target": "commonJS",
+    "module": "commonJS",
+    "useDefineForClassFields": true,
+    "lib": ["ESNext","es6","dom",  "dom.iterable","es2020",  "scripthost"],
+    "moduleResolution": "Node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx":"preserve",
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,}))
+})
+
+
+</script>
+
+
+</body>
+
+</html>
