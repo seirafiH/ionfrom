@@ -6,7 +6,7 @@ import iconMenu from "@ionic/core/dist/ionic/svg/menu.svg";
 
 export { sum } from "./sum";
 
-export { ionForm as IonForm } from "./laotzu/generateForm";
+export { ionForm as IonForm } from "./ionform/generateForm";
 
 const ICON_MAP = ["home.svg", iconHome, "menu.svg", iconMenu];
 

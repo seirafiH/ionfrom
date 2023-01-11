@@ -94,8 +94,8 @@ import { IonThumbnail } from "@ionic/core/components/ion-thumbnail";
 // import { IonToggle } from "@ionic/core/components/ion-toggle";
 // import { IonToolbar } from "@ionic/core/components/ion-toolbar";
 import { IonVirtualScroll } from "@ionic/core/components/ion-virtual-scroll";
-import { IonForm } from "./laotzu/dynamicForm";
-import { ionForm } from "./laotzu/generateForm";
+import { IonForm } from "./ionform/dynamicForm";
+import { ionForm } from "./ionform/generateForm";
 document.documentElement.classList.add("ion-ce");
 
 function tryDefine(impl: CustomElementConstructor, tag: string) {
