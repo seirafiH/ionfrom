@@ -4,7 +4,6 @@ import "./ionic";
 import iconHome from "@ionic/core/dist/ionic/svg/home.svg";
 import iconMenu from "@ionic/core/dist/ionic/svg/menu.svg";
 
-export { sum } from "./sum";
 
 export { ionForm as IonForm } from "./ionform/generateForm";
 

@@ -20,7 +20,7 @@ import { IonCardContent } from "@ionic/core/components/ion-card-content";
 // import { IonCardTitle } from "@ionic/core/components/ion-card-title";
 import { IonCheckbox } from "@ionic/core/components/ion-checkbox";
 // import { IonChip } from "@ionic/core/components/ion-chip";
-import { IonCol } from "@ionic/core/components/ion-col";
+// import { IonCol } from "@ionic/core/components/ion-col";
 import { IonContent } from "@ionic/core/components/ion-content";
 import { IonDatetime } from "@ionic/core/components/ion-datetime";
 import { IonFabButton } from "@ionic/core/components/ion-fab-button";
