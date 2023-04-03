@@ -6,11 +6,11 @@
 
 /* eslint-disable */
 // import { validationSchema } from '../services/validationSchema';
-
+import { format, utcToZonedTime } from 'date-fns-tz';
 import {
   MyIonicComponents, DynamicFormFunction,
 } from "./types/types";
-
+import themeVariables from "./variables.css?inline";
 import {
   ArraySchema, DefineFormSchemaDictionary, DefineValidationSchemaDictionary,
   GenerateForm, IonInputFields, ValidatorFunction,
@@ -180,9 +180,9 @@ export class Tag {
   validator?: FieldValidationFunction;
   constructor(
     {
-      name = '', value = '', tagName = 'ion-input', labelText = '',
-      disabled = 'false', helper = '', error = '',
-      position = 'floating', type = 'text', parentElement, validation }: TagOptions, validationDictionary: ValidationDictionaryType) {
+      name = '', value = '', tagName = 'ion-input', labelText = '', presentation = '',
+      disabled = 'false', helper = '', error = '', min = '', max = '', local = null, hourCycle = null, dayValues = null, minuteValues = null,
+      position = 'floating', type = 'text', parentElement, validation = null , validator = null }: TagOptions, validationDictionary: ValidationDictionaryType) {
     this.tagName = tagName;
     this.name = name;
     this.value = value;
@@ -191,10 +191,16 @@ export class Tag {
     this.position = position;
     this.type = type;
 
-    if (validation) {
-      validationDictionary.set(name, validation);
+    if (validation || validator) {
+
+      const validate = validation || validator
+      
+      validationDictionary.set(name, validate);
+
     } else {
+
       validationDictionary.set(name, () => true)
+
     }
 
     if (!labelText) {
@@ -238,7 +244,6 @@ export class Tag {
 
         schemaDictionary = [
           ['ion-item', [
-
             ['ion-label', [
               ['innerText', labelText || name],
               ['position', 'floating']
@@ -364,29 +369,54 @@ export class Tag {
       tagName = 'ion-datetime';
       const schema: ArraySchema = [
 
-        ['div', [
-          //   ['style',[
-          //     ['innerText',generateCustomElementStyles(['ionicBase'])],
-          //     // ['position', 'floating']
-          //   ]
-          // ],
+        ['ion-item', [
+          ['style', [
+            ['innerText', themeVariables],
+            // ['position', 'floating']
+          ]
+          ],
+          ['name', name],
+          ['fill', 'solid'],
+
+
+
           ['ion-datetime', [
+
+            // ['id', 'datetime'],
             ['color', 'rose'],
+            ['doneText', 'done'],
+            ['value', value],
+            //  ['min', min],
+            // ['max', max],
+            //['minuteValues',minuteValues],
+            // ['dayValues', dayValues],
+            ['local', local],
+            //  ['hourCycle', hourCycle],
             ['span', [
 
               ['slot', 'title'],
 
-              ['innerText', 'birthday']
+              ['innerText', labelText],
+
 
             ]
 
             ],
             ['name', name],
             ['datetime', 'datetime'],
-            // ['presentation', 'month-year']
-          ]
-
+            ['presentation', presentation || 'date-time']
           ],
+
+
+          ], ['ion-note', [
+            ['slot', 'helper'],
+            ['innerText', helper]
+          ]],
+          ['ion-note', [
+            ['slot', 'error'],
+            ['innerText', error]
+          ]]
+
         ],
         ],
       ];
@@ -452,7 +482,7 @@ export const setTagOptionsArray = (stringDictionary, schemaDictionary?): TagOpti
     return conformingSchema(stringDictionary, schemaDictionary);
 
   } else {
- 
+
     return nonConformingSchema(stringDictionary);
 
   }
@@ -462,10 +492,10 @@ export const setTagOptionsArray = (stringDictionary, schemaDictionary?): TagOpti
 
 function checkIfStringDictionary(dic: any): boolean {
 
-dic = JSON.parse(JSON.stringify(dic));
-if(dic.constructor === String){
-  return false;
-}
+  dic = JSON.parse(JSON.stringify(dic));
+  if (dic.constructor === String) {
+    return false;
+  }
   for (const key in dic) {
     if (dic[key].constructor === String) {
       continue;
@@ -511,12 +541,12 @@ export const createForm = async ({ jsonForm, detailedSchema, defineFormSchema, d
   }
 
 
-// if(useValidationSchema) {
+  // if(useValidationSchema) {
 
-// validationDic[useValidationSchema] = validationDic;
+  // validationDic[useValidationSchema] = validationDic;
 
 
-// }
+  // }
 
 
 
@@ -532,7 +562,7 @@ export const createForm = async ({ jsonForm, detailedSchema, defineFormSchema, d
       stringDictionary = formData;
 
 
-    } else if(!checkIfStringDictionary(jsonForm)){
+    } else if (!checkIfStringDictionary(jsonForm)) {
 
       stringDictionary = {};
 
@@ -548,7 +578,7 @@ export const createForm = async ({ jsonForm, detailedSchema, defineFormSchema, d
 
       tags = setTagOptionsArray(jsonForm, false)
     }
-  
+
   }
 
 
@@ -611,7 +641,7 @@ function buttonStatus(event: Event | boolean, ionButton: HTMLIonButtonElement, f
           ionButton.classList.add('ion-invalid')
 
           ionButton.setAttribute('color', 'warning');
-
+          click
           const items: HTMLIonItems = Array.from(formObject.shadowRoot.querySelectorAll(missing.map(nameAttr => `ion-item[name="${nameAttr}"]`).join(',')));
           items.forEach(htmlIonItem => {
 
@@ -660,13 +690,14 @@ export const changeEvents = async (event: Event, formObject: IonForm): Promise<b
 
   const el: any = event.target;
 
-  if (event.target instanceof HTMLElement && isIonInputElement(el.tagName)) {
+
+  if (event.target instanceof HTMLElement && event.detail && event.detail.value) {
 
     const ionInput: any = event.target;
 
     const name: string = ionInput.name;
 
-    const value = ionInput.value.trim();
+    const value = event.detail.value.trim();
 
     const ionItemHTMLElement: MyIonicComponents.HTMLIonItemElement = ionInput.closest('ion-item');
 
@@ -720,6 +751,7 @@ export const click = async (event: Event, formObject: IonForm): boolean => {
 
 
   const target: any = event.target;
+
 
   if (event.target instanceof HTMLElement && (event.target.tagName === 'ION-BUTTON')) {
 

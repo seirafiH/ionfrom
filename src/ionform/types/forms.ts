@@ -139,6 +139,10 @@ export class TagOption implements TagOptions {
 
   labelText?: string;
 
+  display_format?: string;
+
+  presentation?: string;
+
   constructor({
     name = "",
     value = "",

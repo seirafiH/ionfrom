@@ -2,12 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // import "@ionic/core/dist/types/components";
 import { TupleType } from "typescript";
+
 import {
   CheckFormResponse,
   FieldValidationResponse,
   HelperError,
   ValidatorFunction,
 } from "./types/forms";
+
 import { ValidationDictionaryType, FieldObject } from "./types/types";
 
 import validator from "validator";
@@ -20,6 +22,7 @@ const getHelpers = (
   ionItemElement: HTMLElement,
   _inputName: string
 ): HelperError | null => {
+
   const helperError: any = Array.from(
     ionItemElement.querySelectorAll(
       'ion-note[slot="helper"],ion-note[slot="error"]'

@@ -1,3 +1,5 @@
+// @ts-nocheck
+// import { defineCustomElements } from "@ionic/core/loader";
 import coreCss from "@ionic/core/css/core.css?inline";
 
 /** Basic CSS for apps built with Ionic */
@@ -12,8 +14,14 @@ import textAlignmentCss from "@ionic/core/css/text-alignment.css?inline";
 import textTransFormationCss from "@ionic/core/css/text-transformation.css?inline";
 import flexUtilsCss from "@ionic/core/css/flex-utils.css?inline";
 import displayCss from "@ionic/core/css/display.css?inline";
+import themeVariables from "./variables.css?inline";
 import { minify } from "csso";
-
+// import {
+//   loadingController,
+//   modalController,
+//   pickerController,
+//   toastController,
+// } from "@ionic/core";
 import {
   GenerateForm,
   ValidatorFunction,
@@ -44,6 +52,7 @@ let styles = [
   textTransFormationCss,
   flexUtilsCss,
   displayCss,
+  themeVariables,
 ];
 styles = [
   minify(
@@ -51,6 +60,12 @@ styles = [
     { restructure: true }
   ).css,
 ];
+// defineCustomElements();
+// (window as any).loadingController = loadingController;
+// (window as any).modalController = modalController;
+// (window as any).pickerController = pickerController;
+// (window as any).toastController = toastController;
+
 export class IonForm extends HTMLElement implements DynamicFormType {
   private shadow: ShadowRoot;
 
@@ -69,7 +84,9 @@ export class IonForm extends HTMLElement implements DynamicFormType {
       schemaTemplates: {},
     });
     this.shadow = this.attachShadow({ mode: "open" });
+
     const parent = document.createElement("ion-app");
+    // const link = document.createElement('LINK','')
 
     this.wrapper = document.createElement("ion-content");
     parent.appendChild(this.wrapper);
@@ -129,6 +146,12 @@ export class IonForm extends HTMLElement implements DynamicFormType {
       return await changeEvents(event, this);
     });
 
+    this.wrapper.addEventListener(
+      "DateTimeChangeEventDetail",
+      async (event: Event) => {
+        console.log("event", event);
+      }
+    );
     this.wrapper.addEventListener("ionFocus", async (event: Event) => {
       return await click(event, this);
     });

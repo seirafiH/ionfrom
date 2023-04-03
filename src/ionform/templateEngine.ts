@@ -12,7 +12,7 @@ export const isIonInputElement: (tagName: string) => boolean = (
   Boolean(
     [
       "ION-INPUT",
-      "ION-DATE",
+      "ION-DATETIME",
       "ION-CHECKBOX",
       "ION-TEXTAREA",
       "INPUT",

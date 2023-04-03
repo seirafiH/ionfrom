@@ -45,13 +45,14 @@ Once you're done, that's it.
 
 ## Your field validation is a simple callback that takes the name of your input. 🏈. 
 ### The callback provides you a fieldState 🤯 
-#### the fieldState provides you 💡
-##### an updated value of your input ✔️
-##### an helper html element ✔️
-##### an error html element ✔️
-##### the current state of each input ✔️
-##### an allValid boolean ✔️
-#####  validator methods✔️
+#### The fieldState provides you 💡
+##### An updated value of your input ✔️
+##### An helper html element ✔️
+##### An error html element ✔️
+##### The current state of each input ✔️
+##### An allValid boolean ✔️
+##### Validator methods ✔️
+##### A lnkField method for dependent adjacent field values ✔️
 
 ## 🚦The fieldValidate function must return a boolean 
 
@@ -119,7 +120,7 @@ myForm.fieldValidate('repeatPassword', async (fieldState: FieldValidationRespons
     });
 
 ```
-we the tuffs we the sutff. We me tough the we stuff stuff. 
+
 
 # field validation with dynamic helper and error messages
 
@@ -206,7 +207,9 @@ we the tuffs we the sutff. We me tough the we stuff stuff.
 
 ```
 
-# generate the HTML schema to accompany the key value pairs  
+# generate the HTML schema. 
+## limitations
+### Where Buttons are nesseary, only one button per form. 
 
 ```ts
 
@@ -233,16 +236,18 @@ const detailedSchema = [
 ```
 
 # conversely you can specify your validator function in your schemaDictionary  
-
+## make sure to check the fieldState options to see if they are available.
 ```ts
 
 const schemaDictionary = {
 
         first:
 
-          { disabled: 'true', type: 'text', tagName: 'input', validator: function(input: HTMLIonInputElement |  FieldValidationResponse) { 
-           
-            if(input.value.length){
+          { disabled: 'true', type: 'text', tagName: 'input', validator: function(fieldState: HTMLIonInputElement |  FieldValidationResponse) {
+
+            const { value, validator, passwordValidator, helper, error, linkField } = fieldState;
+            if(helper){
+
 
               return true
             }
@@ -259,7 +264,6 @@ const schemaDictionary = {
   # Use your favorite validation tools 🧑‍🔧, and get that validation satisfaction! 😌 
   ### validator.js 💣
   ### password-validator 💣
-  
   ### define a custom validation schema 🏗
   ### Check the fieldState hooks/options to see if they are available 🪝 
 
